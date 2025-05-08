@@ -45,10 +45,6 @@ return [
             'driver' => 'jwt',
             'provider' => 'clients',
         ],
-        'provider' => [
-            'driver' => 'jwt',
-            'provider' => 'providers',
-        ],
     ],
 
 
@@ -78,11 +74,6 @@ return [
             'driver' => 'eloquent',
             'model' => \Modules\Client\App\Models\Client::class,
         ],
-        'providers' => [
-            'driver' => 'eloquent',
-            'model' => \Modules\Provider\App\Models\Provider::class,
-        ],
-
     ],
 
     /*
@@ -114,13 +105,6 @@ return [
 
         'clients' => [
             'provider' => 'clients',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-
-        'providers' => [
-            'provider' => 'providers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
