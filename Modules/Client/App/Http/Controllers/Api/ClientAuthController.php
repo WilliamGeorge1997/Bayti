@@ -8,9 +8,7 @@ use App\Http\Controllers\Controller;
 use Modules\Client\App\Models\Client;
 use Modules\Client\Service\ClientService;
 use Modules\Client\App\resources\ClientResource;
-use Modules\Client\App\Http\Requests\ClientLoginRequest;
 use Modules\Client\App\Http\Requests\ClientVerifyRequest;
-use Modules\Client\App\Http\Requests\ClientRegisterRequest;
 use Modules\Client\App\Http\Requests\ClientLoginOrRegisterRequest;
 
 
@@ -50,9 +48,9 @@ class ClientAuthController extends Controller
                 return $this->respondWithToken($token);
             }
             $data = (new ClientDto($request))->dataFromRequest();
-            $this->clientService->create($data);
+            $user = $this->clientService->create($data);
             DB::commit();
-            return returnMessage(false, 'Client Registered Successfully', null);
+            return returnMessage(false, 'Client Registered Successfully', new ClientResource($user));
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');

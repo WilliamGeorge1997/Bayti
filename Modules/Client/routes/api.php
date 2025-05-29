@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Client\App\Http\Controllers\Api\ClientAuthController;
 use Modules\Client\App\Http\Controllers\Api\ClientController;
-use Modules\Client\App\Http\Controllers\Api\AddressController;
-use Modules\Client\App\Http\Controllers\Api\PhoneVerificationController;
 /*
     |--------------------------------------------------------------------------
     | API Routes
@@ -25,7 +23,7 @@ Route::group([
         // Route::post('login', [ClientAuthController::class, 'login']);
         // Route::post('register', [ClientAuthController::class, 'register']);
         Route::post('logout', [ClientAuthController::class, 'logout']);
-        Route::post('verify', [ClientAuthController::class, 'verifyOtp']);
+        // Route::post('verify', [ClientAuthController::class, 'verifyOtp']);
         Route::post('refresh', [ClientAuthController::class, 'refresh']);
         Route::post('me', [ClientAuthController::class, 'me']);
         // Route::post('check-phone-exists', [ClientAuthController::class, 'checkPhoneExists']);

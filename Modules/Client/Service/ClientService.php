@@ -27,7 +27,7 @@ class ClientService
         }
         $client = Client::create($data);
         // Mail::to($data['email'])->send(new ClientEmailVerification($data['verify_code']));
-        return $client;
+        return $client->fresh();
     }
 
     public function verifyOtp($data)

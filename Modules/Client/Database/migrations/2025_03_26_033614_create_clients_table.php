@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->string('image')->nullable();
-            $table->string('verify_code');
-            $table->boolean('is_active')->default(0);
+            // $table->string('verify_code');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
