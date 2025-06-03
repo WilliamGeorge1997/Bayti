@@ -3,5 +3,5 @@
     "Admin": true,
     "Client": true,
     "Property": false,
-    "Category": false
+    "Category": true
 }

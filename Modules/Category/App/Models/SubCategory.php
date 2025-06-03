@@ -2,20 +2,20 @@
 
 namespace Modules\Category\App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Category\App\Models\Category;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class SubCategory extends Model
 {
     use HasFactory, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['title', 'description', 'image', 'is_active'];
-
+    protected $fillable = ['title', 'description', 'image', 'category_id', 'is_active'];
     //Log Activity
     public function getActivitylogOptions(): LogOptions
     {
@@ -23,7 +23,7 @@ class Category extends Model
             ->logAll()
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs()
-            ->useLogName('Category')
+            ->useLogName('SubCategory')
             ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
     //Serialize Dates
@@ -39,7 +39,7 @@ class Category extends Model
             if (filter_var($value, FILTER_VALIDATE_URL)) {
                 return $value;
             } else {
-                return asset('uploads/category/' . $value);
+                return asset('uploads/sub_category/' . $value);
             }
         }
     }
@@ -51,9 +51,8 @@ class Category extends Model
     }
 
     //Relations
-    public function subCategories()
+    public function category()
     {
-        return $this->hasMany(SubCategory::class);
+        return $this->belongsTo(Category::class);
     }
-
 }
