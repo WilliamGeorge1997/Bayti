@@ -2,6 +2,6 @@
     "Common": false,
     "Admin": true,
     "Client": true,
-    "Property": false,
+    "Property": true,
     "Category": true
 }

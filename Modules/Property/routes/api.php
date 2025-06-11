@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\Property\App\Http\Controllers\Api\PropertyController;
 
 /*
     |--------------------------------------------------------------------------
@@ -14,6 +15,4 @@ use Illuminate\Support\Facades\Route;
     |
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
-    Route::get('property', fn (Request $request) => $request->user())->name('property');
-});
+Route::apiResource('properties', PropertyController::class)->except(['update','delete']);

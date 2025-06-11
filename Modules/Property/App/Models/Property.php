@@ -21,8 +21,12 @@ class Property extends Model
         'title',
         'description',
         'client_id',
-        'category_id',
+        'sub_category_id',
         'transaction_type_id',
+        'lat',
+        'long',
+        'city',
+        'address',
         'price',
         'area',
         'floor',
@@ -33,8 +37,12 @@ class Property extends Model
         'living_rooms',
         'bathrooms',
         'width_ratio',
+        'video',
         'notes',
+        'is_furnished',
+        'is_installment',
         'is_active',
+        'is_available',
     ];
 
     //Log Activity
@@ -47,7 +55,7 @@ class Property extends Model
             ->useLogName('Client')
             ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
-    
+
     //Serialize Dates
     protected function serializeDate(\DateTimeInterface $date)
     {

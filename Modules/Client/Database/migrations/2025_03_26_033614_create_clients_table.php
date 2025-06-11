@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('phone')->unique();
+            $table->string('whatsapp')->nullable();
             $table->string('password');
             $table->string('image')->nullable();
-            // $table->string('verify_code');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
