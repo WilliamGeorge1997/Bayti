@@ -22,6 +22,8 @@ class PropertyDto
     public $bathrooms;
     public $width_ratio;
     public $video;
+    public $phone;
+    public $whatsapp;
     public $notes;
     public $is_furnished;
     public $is_installment;
@@ -63,6 +65,10 @@ class PropertyDto
             $this->width_ratio = $request->get('width_ratio');
         if ($request->get('video'))
             $this->video = $request->get('video');
+        if ($request->get('phone'))
+            $this->phone = $request->get('phone');
+        if ($request->get('whatsapp'))
+            $this->whatsapp = $request->get('whatsapp');
         if ($request->get('notes'))
             $this->notes = $request->get('notes');
         $this->is_furnished = isset($request['is_furnished']) ? 1 : 0;
@@ -107,6 +113,10 @@ class PropertyDto
             unset($data['width_ratio']);
         if ($this->video == null)
             unset($data['video']);
+        if ($this->phone == null)
+            unset($data['phone']);
+        if ($this->whatsapp == null)
+            unset($data['whatsapp']);
         if ($this->notes == null)
             unset($data['notes']);
         if ($this->is_furnished == null)

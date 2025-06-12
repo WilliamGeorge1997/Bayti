@@ -29,7 +29,7 @@ class PropertyService
 
     function active($data = [], $relations = [])
     {
-        $properties = Property::query()->active()->with($relations)->latest();
+        $properties = Property::query()->active()->available()->with($relations)->latest();
         return getCaseCollection($properties, $data);
     }
     public function create($data)
@@ -69,9 +69,9 @@ class PropertyService
         return $property->fresh();
     }
 
-    public function toggleAvailable($property)
+    public function toggleAvailable($property, $data)
     {
-        $property->update(['is_available' => !$property->is_available]);
+        $property->update(array_merge($data, ['is_available' => !$property->is_available]));
         return $property->fresh();
     }
 }

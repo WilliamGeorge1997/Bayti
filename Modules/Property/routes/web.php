@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Modules\Property\App\Http\Controllers\PropertyController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +11,3 @@ use Modules\Property\App\Http\Controllers\PropertyController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('property', PropertyController::class)->names('property');
-});

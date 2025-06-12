@@ -2,11 +2,12 @@
 
 namespace Modules\Client\App\Models;
 
+use Spatie\Activitylog\LogOptions;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Modules\Property\App\Models\Property;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Client extends Authenticatable implements JWTSubject
 {
@@ -47,6 +48,10 @@ class Client extends Authenticatable implements JWTSubject
         }
     }
 
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
     //JWT
 
     /**

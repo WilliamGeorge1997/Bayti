@@ -2,17 +2,17 @@
 
 namespace Modules\Property\App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Modules\Client\App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Category\App\Models\Category;
-use Modules\Property\App\Models\TransactionType;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Modules\Category\App\Models\SubCategory;
+use Modules\Property\App\Models\PropertyImage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -38,11 +38,15 @@ class Property extends Model
         'bathrooms',
         'width_ratio',
         'video',
+        'phone',
+        'whatsapp',
         'notes',
         'is_furnished',
         'is_installment',
         'is_active',
         'is_available',
+        'unavailable_comment',
+        'is_sold',
     ];
 
     //Log Activity
@@ -52,7 +56,7 @@ class Property extends Model
             ->logAll()
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs()
-            ->useLogName('Client')
+            ->useLogName('Property')
             ->dontLogIfAttributesChangedOnly(['updated_at']);
     }
 
@@ -62,19 +66,26 @@ class Property extends Model
         return $date->format('Y-m-d h:i A');
     }
 
+    //Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('is_available', 1);
+    }
+
+    //Relations
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function category()
+    public function subCategory()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function transactionType()
-    {
-        return $this->belongsTo(TransactionType::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function images()

@@ -34,7 +34,11 @@ return new class extends Migration {
             $table->unsignedTinyInteger('bathrooms')->nullable()->comment('عدد الحمامات');
             $table->decimal('width_ratio', 5, 2)->nullable()->comment('نسبة الاتساع');
             $table->string('video')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('whatsapp')->nullable();
             $table->text('notes')->nullable();
+            $table->boolean('is_sold')->default(0);
+            $table->string('unavailable_comment')->nullable();
             $table->boolean('is_furnished')->default(0)->comment('بعفش او بدون عفش');
             $table->boolean('is_installment')->default(0)->comment('بالتقسيط');
             $table->boolean('is_active')->default(0);

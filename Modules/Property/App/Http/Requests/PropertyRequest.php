@@ -19,15 +19,17 @@ class PropertyRequest extends FormRequest
             'city' => 'required|string',
             'address' => 'required|string',
             'price' => 'required|numeric',
-            'area' => 'required|numeric',
-            'floor' => 'required|integer',
-            'directions' => 'required|string',
-            'age' => 'required|integer',
-            'ownership_type' => 'required|string',
-            'bedrooms' => 'required|integer',
-            'living_rooms' => 'required|integer',
-            'bathrooms' => 'required|integer',
-            'width_ratio' => 'required|numeric',
+            'area' => 'sometimes|numeric',
+            'floor' => 'sometimes|integer',
+            'directions' => 'sometimes|string',
+            'age' => 'sometimes|integer',
+            'ownership_type' => 'sometimes|string',
+            'bedrooms' => 'sometimes|integer',
+            'living_rooms' => 'sometimes|integer',
+            'bathrooms' => 'sometimes|integer',
+            'width_ratio' => 'sometimes|numeric',
+            'phone' => 'required|string',
+            'whatsapp' => 'required|string',
             'video' => 'sometimes|url',
             'notes' => 'sometimes|string',
             'is_furnished' => 'sometimes|boolean',
@@ -37,8 +39,49 @@ class PropertyRequest extends FormRequest
         ];
     }
 
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Title',
+            'description' => 'Description',
+            'sub_category_id' => 'Sub Category',
+            'lat' => 'Latitude',
+            'long' => 'Longitude',
+            'city' => 'City',
+            'address' => 'Address',
+            'price' => 'Price',
+            'area' => 'Area',
+            'floor' => 'Floor',
+            'directions' => 'Directions',
+            'age' => 'Age',
+            'ownership_type' => 'Ownership Type',
+            'bedrooms' => 'Bedrooms',
+            'living_rooms' => 'Living Rooms',
+            'bathrooms' => 'Bathrooms',
+            'width_ratio' => 'Width Ratio',
+            'video' => 'Video',
+            'notes' => 'Notes',
+            'is_furnished' => 'Is Furnished',
+            'is_installment' => 'Is Installment',
+            'images' => 'Images',
+            'images.*' => 'Image',
+            'phone' => 'Phone Number',
+            'whatsapp' => 'Whatsapp Number',
+        ];
+    }
+
     public function authorize(): bool
     {
+        if (auth('client')->user()->properties()->count() >= 1) {
+            throw new HttpResponseException(
+                returnMessage(
+                    false,
+                    'لا يمكنك انشاء اكثر من اعلان واحد للعقارات',
+                    null,
+                    'forbidden'
+                )
+            );
+        }
         return true;
     }
 

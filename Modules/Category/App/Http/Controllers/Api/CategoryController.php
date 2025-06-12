@@ -25,5 +25,4 @@ class CategoryController extends Controller
         $categories = $this->categoryService->active($data);
         return returnMessage(true, 'Categories Fetched Successfully', CategoryResource::collection($categories)->response()->getData(true));
     }
-
 }
