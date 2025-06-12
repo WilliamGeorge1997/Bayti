@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Property::class)->index()->constrained()->cascadeOnDelete();
             $table->string('image');
-            $table->boolean('is_main')->default(0);
             $table->timestamps();
         });
     }

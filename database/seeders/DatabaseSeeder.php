@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Client\App\Models\Client;
 use Modules\Category\App\Models\Category;
 use Modules\Property\App\Models\Property;
+use Modules\Property\App\Models\PropertyImage;
 use Modules\Category\App\Models\SubCategory;
 use Modules\Admin\Database\Seeders\AdminDatabaseSeeder;
-
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
                 'last_name' => 'علي',
                 'email' => 'ahmed@example.com',
                 'phone' => '01234567891',
+                'image' => 'https://placehold.co/600x400',
                 'password' => Hash::make('123123'),
                 'is_active' => 1,
                 'created_at' => now(),
@@ -38,6 +39,7 @@ class DatabaseSeeder extends Seeder
                 'last_name' => 'علي',
                 'email' => 'mohamed@example.com',
                 'phone' => '01234567892',
+                'image' => 'https://placehold.co/600x400',
                 'password' => Hash::make('123123'),
                 'is_active' => 1,
                 'created_at' => now(),
@@ -47,12 +49,12 @@ class DatabaseSeeder extends Seeder
 
         Client::insert($clients);
 
-
         $categories = [
             [
                 'title' => 'سكني',
                 'description' => 'عقارات سكنية للمعيشة',
                 'is_active' => 1,
+                'image' => 'https://placehold.co/600x400',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -60,6 +62,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'تجاري',
                 'description' => 'عقارات تجارية للأعمال',
                 'is_active' => 1,
+                'image' => 'https://placehold.co/600x400',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -67,6 +70,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'أرض',
                 'description' => 'أراضي للتطوير',
                 'is_active' => 1,
+                'image' => 'https://placehold.co/600x400',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -82,6 +86,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'شقق سكنية',
                 'category_id' => 1,
                 'is_active' => 1,
+                'image' => 'https://placehold.co/600x400',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -89,6 +94,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'فيلا',
                 'description' => 'فلل سكنية',
                 'category_id' => 1,
+                'image' => 'https://placehold.co/600x400',
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -98,6 +104,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'مكتب',
                 'description' => 'مكاتب تجارية',
                 'category_id' => 2,
+                'image' => 'https://placehold.co/600x400',
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -106,6 +113,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'محل تجاري',
                 'description' => 'مساحات تجارية',
                 'category_id' => 2,
+                'image' => 'https://placehold.co/600x400',
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -115,6 +123,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'أرض سكنية',
                 'description' => 'أرض للتطوير السكني',
                 'category_id' => 3,
+                'image' => 'https://placehold.co/600x400',
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -123,6 +132,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'أرض تجارية',
                 'description' => 'أرض للتطوير التجاري',
                 'category_id' => 3,
+                'image' => 'https://placehold.co/600x400',
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -146,7 +156,7 @@ class DatabaseSeeder extends Seeder
                 'floor' => 5,
                 'directions' => 'شمال',
                 'age' => 2,
-                'ownership_type' => 'كامل',
+                'ownership_type' => 'ملك',
                 'bedrooms' => 2,
                 'living_rooms' => 1,
                 'bathrooms' => 2,
@@ -155,6 +165,8 @@ class DatabaseSeeder extends Seeder
                 'whatsapp' => '0123456789',
                 'video' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 'notes' => 'هذه ملاحظة تجريبية',
+                'unavailable_comment' => null,
+                'is_sold' => 0,
                 'is_furnished' => 1,
                 'is_installment' => 0,
                 'is_active' => 1,
@@ -185,8 +197,10 @@ class DatabaseSeeder extends Seeder
                 'whatsapp' => '0123456789',
                 'video' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 'notes' => 'هذه ملاحظة تجريبية',
-                'is_furnished' => 0,
-                'is_installment' => 0,
+                'unavailable_comment' => null,
+                'is_sold' => 0,
+                'is_furnished' => 1,
+                'is_installment' => 1,
                 'is_active' => 1,
                 'is_available' => 1,
                 'created_at' => now(),
@@ -195,5 +209,34 @@ class DatabaseSeeder extends Seeder
         ];
 
         Property::insert($properties);
+
+        $propertyImages = [
+            [
+                'property_id' => 1,
+                'image' => 'https://placehold.co/600x400',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'property_id' => 1,
+                'image' => 'https://placehold.co/600x400',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'property_id' => 2,
+                'image' => 'https://placehold.co/600x400',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'property_id' => 2,
+                'image' => 'https://placehold.co/600x400',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+
+        PropertyImage::insert($propertyImages);
     }
 }
