@@ -49,8 +49,9 @@ class ClientAuthController extends Controller
             }
             $data = (new ClientDto($request))->dataFromRequest();
             $user = $this->clientService->create($data);
+            $token = auth('client')->login($user);
             DB::commit();
-            return returnMessage(false, 'Client Registered Successfully', new ClientResource($user));
+            return $this->respondWithToken($token);
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');

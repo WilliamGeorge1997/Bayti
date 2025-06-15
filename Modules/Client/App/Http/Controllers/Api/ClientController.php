@@ -2,12 +2,13 @@
 
 namespace Modules\Client\App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Modules\Client\App\resources\ClientResource;
 use Modules\Client\Service\ClientService;
-use Modules\Client\App\Http\Requests\ClientChangePasswordRequest;
+use Modules\Client\App\resources\ClientResource;
 use Modules\Client\App\Http\Requests\ClientUpdateProfileRequest;
+use Modules\Client\App\Http\Requests\ClientChangePasswordRequest;
 
 class ClientController extends Controller
 {
@@ -23,6 +24,15 @@ class ClientController extends Controller
         $this->clientService = $clientService;
     }
 
+    public function clientProperties(Request $request)
+    {
+        $data = $request->all();
+        $relations = ['properties' => function($query) {
+            $query->active()->available();
+        }, 'properties.images', 'properties.subCategory.category'];
+        $properties = $this->clientService->clientProperties($data, $relations);
+        return returnMessage(true, 'Client Properties Fetched Successfully', ClientResource::collection($properties)->response()->getData(true));
+    }
     public function changePassword(ClientChangePasswordRequest $request)
     {
         try{

@@ -19,6 +19,7 @@ Route::group([
     'prefix' => 'client'
 ], function ($router) {
     Route::post('authenticate', [ClientAuthController::class, 'loginOrRegister']);
+
     Route::group(['prefix' => 'auth'], function ($router) {
         // Route::post('login', [ClientAuthController::class, 'login']);
         // Route::post('register', [ClientAuthController::class, 'register']);
@@ -27,7 +28,9 @@ Route::group([
         Route::post('refresh', [ClientAuthController::class, 'refresh']);
         Route::post('me', [ClientAuthController::class, 'me']);
         // Route::post('check-phone-exists', [ClientAuthController::class, 'checkPhoneExists']);
+        
     });
+    Route::get('properties', [ClientController::class, 'clientProperties']);
     Route::post('change-password', [ClientController::class, 'changePassword']);
     Route::post('update-profile', [ClientController::class, 'updateProfile']);
 });

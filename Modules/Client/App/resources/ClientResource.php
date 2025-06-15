@@ -3,6 +3,7 @@
 namespace Modules\Client\App\resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Property\App\resources\PropertyResource;
 
 class ClientResource extends JsonResource
 {
@@ -21,6 +22,7 @@ class ClientResource extends JsonResource
             "is_active" => $this->is_active,
             "created_at" => $this->created_at->format('Y-m-d'),
             "updated_at" => $this->updated_at->format('Y-m-d'),
+            "properties" => PropertyResource::collection($this->whenLoaded('properties')),
         ];
     }
 }

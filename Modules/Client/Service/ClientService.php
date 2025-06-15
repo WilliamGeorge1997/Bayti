@@ -69,4 +69,15 @@ class ClientService
         }
         $client->update($data);
     }
+
+    public function clientProperties($data, $relations)
+    {
+        $properties = Client::query()
+        ->whereHas('properties', function($query) {
+            $query->active()->available();
+        })
+        ->with($relations)
+        ->orderByDesc('id');
+        return getCaseCollection($properties,$data);
+    }
 }
