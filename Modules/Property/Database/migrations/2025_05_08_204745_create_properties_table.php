@@ -20,9 +20,9 @@ return new class extends Migration {
             $table->foreignIdFor(SubCategory::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('long', 10, 8)->nullable();
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('address')->nullable();
-            $table->decimal('price', 12, 2);
+            $table->decimal('price', 12, 2)->nullable();
             $table->string('type')->nullable()->comment('نوع');
             $table->decimal('area', 10, 2)->nullable()->comment('المساحة');
             $table->unsignedTinyInteger('floor')->nullable()->comment('الطابق');

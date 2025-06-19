@@ -11,13 +11,13 @@ class PropertyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string',
-            'sub_category_id' => 'required|exists:sub_categories,id',
-            'lat' => 'required|numeric',
-            'long' => 'required|numeric',
-            'city' => 'required|string',
-            'address' => 'required|string',
-            'price' => 'required|numeric',
+            'description' => 'sometimes|string',
+            'sub_category_id' => 'sometimes|exists:sub_categories,id',
+            'lat' => 'sometimes|numeric',
+            'long' => 'sometimes|numeric',
+            'city' => 'sometimes|string',
+            'address' => 'sometimes|string',
+            'price' => 'sometimes|numeric',
             'type' => 'sometimes|string',
             'area' => 'sometimes|numeric',
             'floor' => 'sometimes|integer',
@@ -35,13 +35,13 @@ class PropertyRequest extends FormRequest
             'fruit_trees' => 'sometimes|integer',
             'water_wells' => 'sometimes|integer',
             'video' => 'sometimes|url',
-            'phone' => 'required|string',
-            'whatsapp' => 'required|string',
+            'phone' => 'sometimes|string',
+            'whatsapp' => 'sometimes|string',
             'notes' => 'sometimes|string',
             'finishing_status' => 'sometimes|string|in:جاهز للسكن,بحاجة إلى اكساء',
             'is_furnished' => 'sometimes|boolean',
             'is_installment' => 'sometimes|boolean',
-            'images' => 'required|array',
+            'images' => 'sometimes|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:1024',
         ];
     }
