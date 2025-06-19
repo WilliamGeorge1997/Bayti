@@ -18,7 +18,6 @@ class Property extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'title',
         'description',
         'client_id',
         'sub_category_id',
@@ -28,6 +27,7 @@ class Property extends Model
         'city',
         'address',
         'price',
+        'type',
         'area',
         'floor',
         'directions',
@@ -36,17 +36,24 @@ class Property extends Model
         'bedrooms',
         'living_rooms',
         'bathrooms',
-        'width_ratio',
+        'facades',
+        'scale',
+        'pools',
+        'salons',
+        'total_area',
+        'fruit_trees',
+        'water_wells',
         'video',
         'phone',
         'whatsapp',
         'notes',
         'is_furnished',
+        'is_sold',
         'is_installment',
         'is_active',
         'is_available',
         'unavailable_comment',
-        'is_sold',
+        'finishing_status',
     ];
 
     //Log Activity

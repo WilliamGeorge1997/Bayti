@@ -4,7 +4,7 @@ namespace Modules\Property\DTO;
 
 class PropertyDto
 {
-    public $title;
+    public $type;
     public $description;
     public $sub_category_id;
     public $lat;
@@ -17,20 +17,28 @@ class PropertyDto
     public $directions;
     public $age;
     public $ownership_type;
+    public $facades;
+    public $scale;
+    public $pools;
+    public $salons;
+    public $total_area;
+    public $fruit_trees;
+    public $water_wells;
     public $bedrooms;
     public $living_rooms;
     public $bathrooms;
-    public $width_ratio;
     public $video;
     public $phone;
     public $whatsapp;
     public $notes;
     public $is_furnished;
     public $is_installment;
+    public $finishing_status;
+
     public function __construct($request)
     {
-        if ($request->get('title'))
-            $this->title = $request->get('title');
+        if ($request->get('type'))
+            $this->type = $request->get('type');
         if ($request->get('description'))
             $this->description = $request->get('description');
         if ($request->get('sub_category_id'))
@@ -61,8 +69,20 @@ class PropertyDto
             $this->living_rooms = $request->get('living_rooms');
         if ($request->get('bathrooms'))
             $this->bathrooms = $request->get('bathrooms');
-        if ($request->get('width_ratio'))
-            $this->width_ratio = $request->get('width_ratio');
+        if ($request->get('facades'))
+            $this->facades = $request->get('facades');
+        if ($request->get('scale'))
+            $this->scale = $request->get('scale');
+        if ($request->get('pools'))
+            $this->pools = $request->get('pools');
+        if ($request->get('salons'))
+            $this->salons = $request->get('salons');
+        if ($request->get('total_area'))
+            $this->total_area = $request->get('total_area');
+        if ($request->get('fruit_trees'))
+            $this->fruit_trees = $request->get('fruit_trees');
+        if ($request->get('water_wells'))
+            $this->water_wells = $request->get('water_wells');
         if ($request->get('video'))
             $this->video = $request->get('video');
         if ($request->get('phone'))
@@ -71,14 +91,18 @@ class PropertyDto
             $this->whatsapp = $request->get('whatsapp');
         if ($request->get('notes'))
             $this->notes = $request->get('notes');
-        $this->is_furnished = isset($request['is_furnished']) ? 1 : 0;
-        $this->is_installment = isset($request['is_installment']) ? 1 : 0;
+        if ($request->get('is_furnished'))
+            $this->is_furnished = $request->get('is_furnished');
+        if ($request->get('is_installment'))
+            $this->is_installment = $request->get('is_installment');
+        if ($request->get('finishing_status'))
+            $this->finishing_status = $request->get('finishing_status');
     }
     public function dataFromRequest()
     {
         $data = json_decode(json_encode($this), true);
-        if ($this->title == null)
-            unset($data['title']);
+        if ($this->type == null)
+            unset($data['type']);
         if ($this->description == null)
             unset($data['description']);
         if ($this->sub_category_id == null)
@@ -109,8 +133,14 @@ class PropertyDto
             unset($data['living_rooms']);
         if ($this->bathrooms == null)
             unset($data['bathrooms']);
-        if ($this->width_ratio == null)
-            unset($data['width_ratio']);
+        if ($this->facades == null)
+            unset($data['facades']);
+        if ($this->scale == null)
+            unset($data['scale']);
+        if ($this->pools == null)
+            unset($data['pools']);
+        if ($this->salons == null)
+            unset($data['salons']);
         if ($this->video == null)
             unset($data['video']);
         if ($this->phone == null)
@@ -123,7 +153,8 @@ class PropertyDto
             unset($data['is_furnished']);
         if ($this->is_installment == null)
             unset($data['is_installment']);
-
+        if ($this->finishing_status == null)
+            unset($data['finishing_status']);
         return $data;
     }
 }

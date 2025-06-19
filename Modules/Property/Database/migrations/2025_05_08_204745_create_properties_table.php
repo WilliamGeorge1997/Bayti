@@ -15,7 +15,6 @@ return new class extends Migration {
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
             $table->text('description')->nullable();
             $table->foreignIdFor(Client::class)->index()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(SubCategory::class)->nullable()->index()->constrained()->nullOnDelete();
@@ -24,21 +23,29 @@ return new class extends Migration {
             $table->string('city');
             $table->string('address')->nullable();
             $table->decimal('price', 12, 2);
-            $table->decimal('area', 10, 2)->comment('المساحة');
+            $table->string('type')->nullable()->comment('نوع');
+            $table->decimal('area', 10, 2)->nullable()->comment('المساحة');
             $table->unsignedTinyInteger('floor')->nullable()->comment('الطابق');
             $table->string('directions')->nullable()->comment('الاتجاهات');
             $table->unsignedTinyInteger('age')->nullable()->comment('عمر العقار');
-            $table->string('ownership_type')->nullable()->comment('نوع الملكية');
+            $table->enum('ownership_type', ['طابو اخضر', 'حكم محكمة', 'غير ذلك'])->nullable()->comment('نوع الملكية');
             $table->unsignedTinyInteger('bedrooms')->nullable()->comment('عدد غرف النوم');
             $table->unsignedTinyInteger('living_rooms')->nullable()->comment('عدد الصالات');
             $table->unsignedTinyInteger('bathrooms')->nullable()->comment('عدد الحمامات');
-            $table->decimal('width_ratio', 5, 2)->nullable()->comment('نسبة الاتساع');
+            $table->unsignedTinyInteger('facades')->nullable()->comment('عدد الواجهات');
+            $table->decimal('scale', 10, 2)->nullable()->comment('الميزان');
+            $table->unsignedTinyInteger('pools')->nullable()->comment('عدد المسبح');
+            $table->unsignedTinyInteger('salons')->nullable()->comment('صالون');
+            $table->decimal('total_area', 10, 2)->nullable()->comment('مساحة الاجماليه');
+            $table->unsignedTinyInteger('fruit_trees')->nullable()->comment('أشجار مثمرة');
+            $table->unsignedTinyInteger('water_wells')->nullable()->comment('بير مياه');
             $table->string('video')->nullable();
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_sold')->default(0);
             $table->string('unavailable_comment')->nullable();
+            $table->enum('finishing_status', ['جاهز للسكن', 'بحاجة إلى اكساء'])->nullable()->comment('الاكساء');
             $table->boolean('is_furnished')->default(0)->comment('بعفش او بدون عفش');
             $table->boolean('is_installment')->default(0)->comment('بالتقسيط');
             $table->boolean('is_active')->default(0);
