@@ -54,6 +54,7 @@ class Property extends Model
         'is_available',
         'unavailable_comment',
         'finishing_status',
+        'rental_period',
     ];
 
     //Log Activity

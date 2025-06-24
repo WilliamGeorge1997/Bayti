@@ -38,6 +38,7 @@ class PropertyRequest extends FormRequest
             'phone' => 'sometimes|string',
             'whatsapp' => 'sometimes|string',
             'notes' => 'sometimes|string',
+            'rental_period' => 'sometimes|string|in:شهري,يومي,سنوي,الكل',
             'finishing_status' => 'sometimes|string|in:جاهز للسكن,بحاجة إلى اكساء',
             'is_furnished' => 'sometimes|boolean',
             'is_installment' => 'sometimes|boolean',
@@ -81,6 +82,7 @@ class PropertyRequest extends FormRequest
             'images.*' => 'Image',
             'phone' => 'Phone',
             'whatsapp' => 'Whatsapp',
+            'rental_period' => 'Rental Period',
         ];
     }
 

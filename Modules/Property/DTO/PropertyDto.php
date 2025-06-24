@@ -34,7 +34,7 @@ class PropertyDto
     public $is_furnished;
     public $is_installment;
     public $finishing_status;
-
+    public $rental_period;
     public function __construct($request)
     {
         if ($request->get('type'))
@@ -97,6 +97,8 @@ class PropertyDto
             $this->is_installment = $request->get('is_installment');
         if ($request->get('finishing_status'))
             $this->finishing_status = $request->get('finishing_status');
+        if ($request->get('rental_period'))
+            $this->rental_period = $request->get('rental_period');
     }
     public function dataFromRequest()
     {
@@ -155,6 +157,8 @@ class PropertyDto
             unset($data['is_installment']);
         if ($this->finishing_status == null)
             unset($data['finishing_status']);
+        if ($this->rental_period == null)
+            unset($data['rental_period']);
         return $data;
     }
 }
