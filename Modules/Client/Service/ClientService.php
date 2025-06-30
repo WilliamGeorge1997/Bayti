@@ -80,4 +80,8 @@ class ClientService
         ->orderByDesc('id');
         return getCaseCollection($properties,$data);
     }
+    function findToken($id)
+    {
+        return Client::where('id', $id)->first()['fcm_token'];
+    }
 }

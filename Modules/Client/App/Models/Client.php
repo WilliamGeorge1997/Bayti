@@ -6,6 +6,7 @@ use Spatie\Activitylog\LogOptions;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Modules\Property\App\Models\Property;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Modules\Notification\App\Models\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -51,6 +52,11 @@ class Client extends Authenticatable implements JWTSubject
     public function properties()
     {
         return $this->hasMany(Property::class);
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')->orWhere('notifiable_id', null);
     }
     //JWT
 

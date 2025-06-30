@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Client\App\Http\Controllers\Api\ClientAuthController;
 use Modules\Client\App\Http\Controllers\Api\ClientController;
+use Modules\Client\App\Http\Controllers\Api\ClientAuthController;
+use Modules\Client\App\Http\Controllers\Api\NotificationController;
 /*
     |--------------------------------------------------------------------------
     | API Routes
@@ -28,9 +29,18 @@ Route::group([
         Route::post('refresh', [ClientAuthController::class, 'refresh']);
         Route::post('me', [ClientAuthController::class, 'me']);
         // Route::post('check-phone-exists', [ClientAuthController::class, 'checkPhoneExists']);
-        
+
     });
     Route::get('properties', [ClientController::class, 'clientProperties']);
     Route::post('change-password', [ClientController::class, 'changePassword']);
     Route::post('update-profile', [ClientController::class, 'updateProfile']);
+});
+
+Route::group([
+    'prefix' => 'notification',
+], function ($router) {
+    Route::get('all', [NotificationController::class, 'index']);
+    Route::post('read', [NotificationController::class, 'readNotification']);
+    Route::post('allow_notification', [NotificationController::class, 'allow_notification']);
+    Route::get('unReadNotificationsCount', [NotificationController::class, 'unReadNotificationsCount']);
 });

@@ -3,8 +3,10 @@
 namespace Modules\Property\Service;
 
 use Illuminate\Support\Facades\File;
+use Modules\Client\App\Models\Client;
 use Modules\Common\Helpers\UploadHelper;
 use Modules\Property\App\Models\Property;
+use Modules\Notification\Service\NotificationService;
 use Modules\Property\App\Jobs\NotifyClientsAboutNewPropertyJob;
 
 class PropertyService
@@ -68,6 +70,9 @@ class PropertyService
     public function toggleActivate($property)
     {
         $property->update(['is_active' => !$property->is_active]);
+        if ($property->is_active) {
+            (new NotificationService)->sendNotification('تم قبول العقار', 'تم قبول العقار بنجاح', $property->client_id, Client::class);
+        }
         return $property->fresh();
     }
 

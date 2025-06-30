@@ -9,6 +9,7 @@ use Modules\Common\Helper\FCMService;
 use Modules\User\Service\UserService;
 use Modules\Admin\Service\AdminService;
 use Modules\Common\Helpers\UploadHelper;
+use Modules\Client\Service\ClientService;
 use Modules\Notification\App\Models\Notification;
 
 class NotificationService
@@ -64,9 +65,7 @@ class NotificationService
         ];
         $this->save($data, $model);
         $fcm = new FCMService;
-        $user_token = $model === User::class ?
-            (new UserService())->findToken($user_id) :
-            (new AdminService())->findToken($user_id);
+        $user_token = (new ClientService())->findToken($user_id);
         if ($user_token ?? null)
             $fcm->sendNotification($data, [$user_token]);
     }
