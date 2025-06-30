@@ -5,8 +5,8 @@ namespace Modules\Client\App\Http\Controllers\Api;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Client\App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Modules\Client\App\Models\Client;
 use Modules\Notification\App\Models\Notification;
 
 class NotificationController extends Controller
@@ -19,14 +19,14 @@ class NotificationController extends Controller
 
     public function index()
     {
-        return returnMessage(true, 'User Notifications', Auth::user()->notifications()->select('id', 'title', 'description', 'image', 'created_at', 'read_at')->orderByDesc('id')->paginate(5));
+        return returnMessage(true, 'Client Notifications', Auth::user()->notifications()->select('id', 'title', 'description', 'image', 'created_at', 'read_at')->orderByDesc('id')->paginate(5));
     }
     public function allow_notification()
     {
         $user = Auth::user();
         $user->allow_notification = !$user->allow_notification;
         $user->save();
-        return returnMessage(true, 'User Updated Successfully');
+        return returnMessage(true, 'Client Updated Successfully');
     }
 
     public function readNotification(Request $request)
@@ -37,7 +37,7 @@ class NotificationController extends Controller
 
     public function unReadNotificationsCount()
     {
-        $unReadCount = Notification::whereNull('read_at')->whereHasMorph('notifiable', [User::class], function ($query) {
+        $unReadCount = Notification::whereNull('read_at')->whereHasMorph('notifiable', [Client::class], function ($query) {
             $query->where('notifiable_id', Auth::id());
         })->count();
         return returnMessage(true, 'Unread Notifications Count', $unReadCount);
