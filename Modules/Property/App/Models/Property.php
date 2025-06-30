@@ -24,6 +24,7 @@ class Property extends Model
         'transaction_type_id',
         'lat',
         'long',
+        'country',
         'city',
         'address',
         'price',

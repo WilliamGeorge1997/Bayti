@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->foreignIdFor(SubCategory::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('long', 10, 8)->nullable();
+            $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
             $table->decimal('price', 12, 2)->nullable();

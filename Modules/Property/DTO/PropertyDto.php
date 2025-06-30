@@ -9,6 +9,7 @@ class PropertyDto
     public $sub_category_id;
     public $lat;
     public $long;
+    public $country;
     public $city;
     public $address;
     public $price;
@@ -47,6 +48,8 @@ class PropertyDto
             $this->lat = $request->get('lat');
         if ($request->get('long'))
             $this->long = $request->get('long');
+        if ($request->get('country'))
+            $this->country = $request->get('country');
         if ($request->get('city'))
             $this->city = $request->get('city');
         if ($request->get('address'))
@@ -113,6 +116,8 @@ class PropertyDto
             unset($data['lat']);
         if ($this->long == null)
             unset($data['long']);
+        if ($this->country == null)
+            unset($data['country']);
         if ($this->city == null)
             unset($data['city']);
         if ($this->address == null)

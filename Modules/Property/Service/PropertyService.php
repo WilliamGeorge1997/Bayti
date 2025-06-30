@@ -3,8 +3,9 @@
 namespace Modules\Property\Service;
 
 use Illuminate\Support\Facades\File;
-use Modules\Property\App\Models\Property;
 use Modules\Common\Helpers\UploadHelper;
+use Modules\Property\App\Models\Property;
+use Modules\Property\App\Jobs\NotifyClientsAboutNewPropertyJob;
 
 class PropertyService
 {
@@ -42,6 +43,7 @@ class PropertyService
                 ]);
             }
         }
+        NotifyClientsAboutNewPropertyJob::dispatch($property->id)->onConnection('database');
         return $property;
     }
 

@@ -3,5 +3,6 @@
     "Admin": true,
     "Client": true,
     "Property": true,
-    "Category": true
+    "Category": true,
+    "Notification": true
 }
