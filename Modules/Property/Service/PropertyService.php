@@ -32,7 +32,7 @@ class PropertyService
 
     function active($data = [], $relations = [])
     {
-        $properties = Property::query()->active()->available()->with($relations)->latest();
+        $properties = Property::query()->active()->with($relations)->latest();
         return getCaseCollection($properties, $data);
     }
     public function create($data)

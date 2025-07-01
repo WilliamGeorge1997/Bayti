@@ -3,11 +3,8 @@
 
 namespace Modules\Notification\Service;
 
-use Modules\User\App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Modules\Common\Helper\FCMService;
-use Modules\User\Service\UserService;
-use Modules\Admin\Service\AdminService;
+use Modules\Common\Helpers\FCMService;
 use Modules\Common\Helpers\UploadHelper;
 use Modules\Client\Service\ClientService;
 use Modules\Notification\App\Models\Notification;
