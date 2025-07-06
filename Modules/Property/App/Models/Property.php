@@ -3,8 +3,11 @@
 namespace Modules\Property\App\Models;
 
 use Spatie\Activitylog\LogOptions;
+use Modules\Country\App\Models\City;
+use Modules\Country\App\Models\Zone;
 use Modules\Client\App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Country\App\Models\Country;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Modules\Category\App\Models\SubCategory;
 use Modules\Property\App\Models\PropertyImage;
@@ -103,4 +106,18 @@ class Property extends Model
         return $this->hasMany(PropertyImage::class);
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
 }
