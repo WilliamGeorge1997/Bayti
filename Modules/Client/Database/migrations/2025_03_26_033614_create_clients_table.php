@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('verify_code')->nullable();
             $table->string('fcm_token')->nullable();
-            $table->boolean('is_active')->default(1);
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }

@@ -27,8 +27,8 @@ class ClientVerifyRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'phone' => 'Phone Number',
-            'otp' => 'OTP',
+            'phone' => 'رقم الهاتف',
+            'otp' => 'الرمز',
         ];
     }
 

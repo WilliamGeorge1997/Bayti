@@ -53,9 +53,8 @@ class ClientAuthController extends Controller
             }
             $data = (new ClientDto($request))->dataFromRequest();
             $user = $this->clientService->create($data);
-            $token = auth('client')->login($user);
             DB::commit();
-            return $this->respondWithToken($token);
+            return returnMessage(true, 'تم التسجيل بنجاح', null);
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');
