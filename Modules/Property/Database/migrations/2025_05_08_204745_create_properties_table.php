@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->unsignedTinyInteger('floor')->nullable()->comment('الطابق');
             $table->string('directions')->nullable()->comment('الاتجاهات');
             $table->unsignedTinyInteger('age')->nullable()->comment('عمر العقار');
-            $table->enum('ownership_type', ['طابو اخضر', 'حكم محكمة', 'غير ذلك'])->nullable()->comment('نوع الملكية');
+            $table->string('ownership_type')->nullable()->comment('نوع الملكية');
             $table->unsignedTinyInteger('bedrooms')->nullable()->comment('عدد غرف النوم');
             $table->unsignedTinyInteger('living_rooms')->nullable()->comment('عدد الصالات');
             $table->unsignedTinyInteger('bathrooms')->nullable()->comment('عدد الحمامات');
@@ -46,7 +46,7 @@ return new class extends Migration {
             $table->text('notes')->nullable();
             $table->boolean('is_sold')->default(0);
             $table->string('unavailable_comment')->nullable();
-            $table->enum('finishing_status', ['جاهز للسكن', 'بحاجة إلى اكساء'])->nullable()->comment('الاكساء');
+            $table->string('finishing_status')->nullable()->comment('الاكساء');
             $table->enum('rental_period', ['شهري', 'يومي', 'سنوي', 'الكل'])->nullable()->comment('نوع الايجار');
             $table->boolean('is_furnished')->default(0)->comment('بعفش او بدون عفش');
             $table->boolean('is_installment')->default(0)->comment('بالتقسيط');
