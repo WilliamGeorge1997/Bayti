@@ -2,13 +2,17 @@
 
 namespace Modules\Client\App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use Modules\Client\DTO\ClientDto;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Modules\Client\App\Models\Client;
 use Modules\Client\Service\ClientService;
 use Modules\Client\App\resources\ClientResource;
+use Modules\Client\App\Http\Requests\ClientLoginRequest;
 use Modules\Client\App\Http\Requests\ClientVerifyRequest;
+use Modules\Client\App\Http\Requests\ClientResendOtpRequest;
+use Modules\Client\App\Http\Requests\ClientForgetPasswordRequest;
 use Modules\Client\App\Http\Requests\ClientLoginOrRegisterRequest;
 
 
@@ -23,7 +27,7 @@ class ClientAuthController extends Controller
      */
     public function __construct(ClientService $clientService)
     {
-        $this->middleware('auth:client', ['except' => ['verifyOtp', 'loginOrRegister']]);
+        $this->middleware('auth:client', ['except' => ['verifyOtp', 'loginOrRegister', 'resendOtp', 'forgetPassword', 'verifyForgetPassword', 'newPassword']]);
         $this->clientService = $clientService;
 
     }
@@ -36,10 +40,10 @@ class ClientAuthController extends Controller
             if ($client) {
                 $credentials = $request->validated();
                 if (!$token = auth('client')->attempt($credentials)) {
-                    return returnMessage(false, 'Unauthorized', ['password' => 'Wrong Credentials'], 'created');
+                    return returnMessage(false, 'غير مصرح لك بالدخول', ['password' => 'كلمة المرور غير صحيحة'], 'created');
                 }
                 if (auth('client')->user()['is_active'] == 0) {
-                    return returnMessage(false, 'In-Active Client Verification Required', null);
+                    return returnMessage(false, 'العميل غير مفعل', null);
                 }
                 if ($request['fcm_token'] ?? null) {
                     auth('client')->user()->update(['fcm_token' => $request->fcm_token]);
@@ -66,16 +70,56 @@ class ClientAuthController extends Controller
             $data = $request->all();
             $result = $this->clientService->verifyOtp($data);
             if ($result == false) {
-                return returnMessage(false, 'Wrong OTP', null, 'unprocessable_entity');
+                return returnMessage(false, 'الرمز غير صحيح', null, 'unprocessable_entity');
             }
             DB::commit();
-            return returnMessage(true, 'Phone Number Verified Successfully', null);
+            return returnMessage(true, 'تم التحقق من رقم الهاتف بنجاح', null);
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');
         }
     }
 
+    public function resendOtp(ClientResendOtpRequest $request, ClientService $clientService)
+    {
+        $data = $request->all();
+        $client = $clientService->findBy('phone', $request['phone'])[0];
+        // $verify_code = rand(1000, 9999);
+        $verify_code = 9999;
+        $clientService->update($client->id, ['verify_code' => $verify_code]);
+        // $smsService = new SMSService();
+        // $smsService->sendSMS($client->phone, $verify_code);
+        return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
+    }
+    public function forgetPassword(ClientForgetPasswordRequest $request, ClientService $clientService)
+    {
+        $data = $request->all();
+        $client = $clientService->findBy('phone', $data['phone'])[0];
+        // $verify_code = rand(1000, 9999);
+        $verify_code = 9999;
+        $clientService->update($client->id, ['verify_code' => $verify_code]);
+        // $smsService = new SMSService();
+        // $smsService->sendSMS($client->phone, $verify_code);
+        return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
+    }
+
+    public function verifyForgetPassword(ClientVerifyRequest $request, ClientService $clientService)
+    {
+        $data = $request->all();
+        $client = $clientService->findBy('phone', $data['phone'])[0];
+        if ($client && $client['verify_code'] == $data['otp']) {
+            return returnMessage(true, 'الرمز صحيح');
+        }
+        return returnMessage(false, 'الرمز غير صحيح', null, 'unauthorized');
+    }
+
+    public function newPassword(ClientLoginRequest $request, ClientService $clientService)
+    {
+        $data = $request->all();
+        $client = $clientService->findBy('phone', $data['phone'])[0];
+        $clientService->update($client->id, ['password' => bcrypt($data['password'])]);
+        return returnMessage(true, 'تم تعديل كلمة المرور بنجاح');
+    }
 
     /**
      * Get the authenticated User.
@@ -84,7 +128,7 @@ class ClientAuthController extends Controller
      */
     public function me()
     {
-        return returnMessage(true, 'Client Data', new ClientResource(auth('client')->user()));
+        return returnMessage(true, 'بيانات العميل', new ClientResource(auth('client')->user()));
     }
 
     /**
@@ -95,7 +139,7 @@ class ClientAuthController extends Controller
     public function logout()
     {
         auth('client')->logout();
-        return returnMessage(true, 'Successfully logged out', null);
+        return returnMessage(true, 'تم تسجيل الخروج بنجاح', null);
     }
 
     /**
@@ -117,7 +161,7 @@ class ClientAuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return returnMessage(true, 'Successfully Logged in', [
+        return returnMessage(true, 'تم تسجيل الدخول بنجاح', [
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('client')->factory()->getTTL() * 60,

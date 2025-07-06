@@ -10,6 +10,7 @@ use Modules\Property\App\Models\Property;
 use Modules\Category\App\Models\SubCategory;
 use Modules\Property\App\Models\PropertyImage;
 use Modules\Admin\Database\Seeders\AdminDatabaseSeeder;
+use Modules\Country\Database\Seeders\CountryDatabaseSeeder;
 use Modules\Category\Database\Seeders\CategoryDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,8 +21,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            AdminDatabaseSeeder::class,
-            CategoryDatabaseSeeder::class,
+            // AdminDatabaseSeeder::class,
+            // CategoryDatabaseSeeder::class,
+            CountryDatabaseSeeder::class,
         ]);
         // $clients = [
         //     [

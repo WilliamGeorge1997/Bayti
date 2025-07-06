@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->string('image')->nullable();
+            $table->string('verify_code')->nullable();
             $table->string('fcm_token')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();

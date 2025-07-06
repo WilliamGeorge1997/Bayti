@@ -27,7 +27,7 @@ class PropertyController extends Controller
         $data = $request->all();
         $relations = ['client', 'subCategory.category', 'images'];
         $properties = $this->propertyService->active($data, $relations);
-        return returnMessage(true, 'Properties Fetched Successfully', PropertyResource::collection($properties)->response()->getData(true));
+        return returnMessage(true, 'تم استرجاع العقارات بنجاح', PropertyResource::collection($properties)->response()->getData(true));
     }
 
     public function store(PropertyRequest $request)
@@ -38,7 +38,7 @@ class PropertyController extends Controller
             $data['client_id'] = auth('client')->id();
             $property = $this->propertyService->create($data);
             DB::commit();
-            return returnMessage(true, 'Property Created Successfully', $property);
+            return returnMessage(true, 'تم انشاء العقار بنجاح', $property);
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');
@@ -51,7 +51,7 @@ class PropertyController extends Controller
             DB::beginTransaction();
             $property = $this->propertyService->toggleAvailable($property, $request->validated());
             DB::commit();
-            return returnMessage(true, 'Property updated successfully', new PropertyResource($property));
+            return returnMessage(true, 'تم تعديل العقار بنجاح', new PropertyResource($property));
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');

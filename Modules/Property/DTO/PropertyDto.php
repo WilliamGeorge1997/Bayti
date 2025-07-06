@@ -9,8 +9,9 @@ class PropertyDto
     public $sub_category_id;
     public $lat;
     public $long;
-    public $country;
-    public $city;
+    public $country_id;
+    public $city_id;
+    public $zone_id;
     public $address;
     public $price;
     public $area;
@@ -48,10 +49,12 @@ class PropertyDto
             $this->lat = $request->get('lat');
         if ($request->get('long'))
             $this->long = $request->get('long');
-        if ($request->get('country'))
-            $this->country = $request->get('country');
-        if ($request->get('city'))
-            $this->city = $request->get('city');
+        if ($request->get('country_id'))
+            $this->country_id = $request->get('country_id');
+        if ($request->get('city_id'))
+            $this->city_id = $request->get('city_id');
+        if ($request->get('zone_id'))
+            $this->zone_id = $request->get('zone_id');
         if ($request->get('address'))
             $this->address = $request->get('address');
         if ($request->get('price'))
@@ -116,10 +119,12 @@ class PropertyDto
             unset($data['lat']);
         if ($this->long == null)
             unset($data['long']);
-        if ($this->country == null)
-            unset($data['country']);
-        if ($this->city == null)
-            unset($data['city']);
+        if ($this->country_id == null)
+            unset($data['country_id']);
+        if ($this->city_id == null)
+            unset($data['city_id']);
+        if ($this->zone_id == null)
+            unset($data['zone_id']);
         if ($this->address == null)
             unset($data['address']);
         if ($this->price == null)

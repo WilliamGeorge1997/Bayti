@@ -4,5 +4,6 @@
     "Client": true,
     "Property": true,
     "Category": true,
-    "Notification": true
+    "Notification": true,
+    "Country": true
 }

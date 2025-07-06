@@ -34,6 +34,12 @@ Route::group([
     Route::get('properties', [ClientController::class, 'clientProperties']);
     Route::post('change-password', [ClientController::class, 'changePassword']);
     Route::post('update-profile', [ClientController::class, 'updateProfile']);
+
+    //Forget Password
+    Route::post('forget-password', [ClientAuthController::class, 'forgetPassword']);
+    Route::post('verify-forget-password', [ClientAuthController::class, 'verifyForgetPassword']);
+    Route::post('new-password', [ClientAuthController::class, 'newPassword']);
+    Route::post('resend-otp', [ClientAuthController::class, 'resendOtp']);
 });
 
 Route::group([

@@ -1,11 +1,13 @@
 <?php
 
+use Modules\Country\App\Models\City;
+use Modules\Country\App\Models\Zone;
 use Modules\Client\App\Models\Client;
 use Illuminate\Support\Facades\Schema;
+use Modules\Country\App\Models\Country;
 use Illuminate\Database\Schema\Blueprint;
 use Modules\Category\App\Models\SubCategory;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Property\App\Models\TransactionType;
 
 return new class extends Migration {
     /**
@@ -20,8 +22,9 @@ return new class extends Migration {
             $table->foreignIdFor(SubCategory::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->decimal('lat', 10, 8)->nullable();
             $table->decimal('long', 10, 8)->nullable();
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
+            $table->foreignIdFor(Country::class)->nullable()->index()->constrained()->nullOnDelete();
+            $table->foreignIdFor(City::class)->nullable()->index()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Zone::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->string('address')->nullable();
             $table->decimal('price', 12, 2)->nullable();
             $table->string('type')->nullable()->comment('نوع');

@@ -6,8 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ClientLoginRequest extends FormRequest
+class ClientForgetPasswordRequest extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,9 +17,7 @@ class ClientLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'exists:clients,phone'],
-            'password' => ['required'],
-            'fcm_token' => ['sometimes','nullable', 'string'],
+            'phone' => 'required|exists:clients,phone',
         ];
     }
 
@@ -28,9 +27,7 @@ class ClientLoginRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'phone' => 'Phone Number',
-            'password' => 'Password',
-            'fcm_token' => 'FCM Token',
+            'phone' => 'رقم الهاتف',
         ];
     }
 
