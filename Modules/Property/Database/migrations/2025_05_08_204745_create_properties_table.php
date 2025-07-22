@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->decimal('long', 10, 8)->nullable();
             $table->foreignIdFor(Country::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->foreignIdFor(City::class)->nullable()->index()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Zone::class)->nullable()->index()->constrained()->nullOnDelete();
+            $table->string('zone')->nullable();
             $table->string('address')->nullable();
             $table->decimal('price', 12, 2)->nullable();
             $table->string('type')->nullable()->comment('نوع');

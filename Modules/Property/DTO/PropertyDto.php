@@ -11,7 +11,7 @@ class PropertyDto
     public $long;
     public $country_id;
     public $city_id;
-    public $zone_id;
+    public $zone;
     public $address;
     public $price;
     public $area;
@@ -53,8 +53,8 @@ class PropertyDto
             $this->country_id = $request->get('country_id');
         if ($request->get('city_id'))
             $this->city_id = $request->get('city_id');
-        if ($request->get('zone_id'))
-            $this->zone_id = $request->get('zone_id');
+        if ($request->get('zone'))
+            $this->zone = $request->get('zone');
         if ($request->get('address'))
             $this->address = $request->get('address');
         if ($request->get('price'))
@@ -123,8 +123,8 @@ class PropertyDto
             unset($data['country_id']);
         if ($this->city_id == null)
             unset($data['city_id']);
-        if ($this->zone_id == null)
-            unset($data['zone_id']);
+        if ($this->zone == null)
+            unset($data['zone']);
         if ($this->address == null)
             unset($data['address']);
         if ($this->price == null)

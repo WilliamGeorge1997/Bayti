@@ -72,7 +72,8 @@ class ClientAuthController extends Controller
                 return returnMessage(false, 'الرمز غير صحيح', null, 'unprocessable_entity');
             }
             DB::commit();
-            return returnMessage(true, 'تم التحقق من رقم الهاتف بنجاح', null);
+            $token = auth('client')->login($result);
+            return $this->respondWithToken($token);
         } catch (\Exception $e) {
             DB::rollBack();
             return returnMessage(false, $e->getMessage(), null, 'server_error');

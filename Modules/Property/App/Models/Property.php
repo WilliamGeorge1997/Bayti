@@ -29,7 +29,7 @@ class Property extends Model
         'long',
         'country_id',
         'city_id',
-        'zone_id',
+        'zone',
         'address',
         'price',
         'type',
