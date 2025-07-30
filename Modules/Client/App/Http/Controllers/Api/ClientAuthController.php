@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Modules\Client\App\Models\Client;
 use Modules\Client\Service\ClientService;
+use Modules\Common\Helpers\WhatsAppService;
 use Modules\Client\App\resources\ClientResource;
 use Modules\Client\App\Http\Requests\ClientLoginRequest;
 use Modules\Client\App\Http\Requests\ClientVerifyRequest;
@@ -53,6 +54,8 @@ class ClientAuthController extends Controller
             }
             $data = (new ClientDto($request))->dataFromRequest();
             $user = $this->clientService->create($data);
+            $whatsappService = new WhatsAppService();
+            $whatsappService->sendMessage($data['phone'], 'Your OTP verification code is: ' . $data['verify_code']);
             DB::commit();
             return returnMessage(true, 'تم التسجيل بنجاح', null);
         } catch (\Exception $e) {
@@ -84,9 +87,11 @@ class ClientAuthController extends Controller
     {
         $data = $request->all();
         $client = $clientService->findBy('phone', $request['phone'])[0];
-        // $verify_code = rand(1000, 9999);
-        $verify_code = 9999;
+        $verify_code = rand(1000, 9999);
+        // $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
+        $whatsappService = new WhatsAppService();
+        $whatsappService->sendMessage($client->phone, 'Your OTP verification code is: ' . $verify_code);
         // $smsService = new SMSService();
         // $smsService->sendSMS($client->phone, $verify_code);
         return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
@@ -95,9 +100,11 @@ class ClientAuthController extends Controller
     {
         $data = $request->all();
         $client = $clientService->findBy('phone', $data['phone'])[0];
-        // $verify_code = rand(1000, 9999);
-        $verify_code = 9999;
+        $verify_code = rand(1000, 9999);
+        // $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
+        $whatsappService = new WhatsAppService();
+        $whatsappService->sendMessage($client->phone, 'Your OTP verification code is: ' . $verify_code);
         // $smsService = new SMSService();
         // $smsService->sendSMS($client->phone, $verify_code);
         return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
