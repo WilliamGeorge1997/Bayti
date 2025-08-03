@@ -17,6 +17,7 @@ class ClientResendOtpRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'country_code' => ['required'],
             'phone' => 'required|exists:clients,phone',
         ];
     }
@@ -28,6 +29,7 @@ class ClientResendOtpRequest extends FormRequest
     {
         return [
             'phone' => 'رقم الهاتف',
+            'country_code' => 'رمز الدولة',
         ];
     }
 

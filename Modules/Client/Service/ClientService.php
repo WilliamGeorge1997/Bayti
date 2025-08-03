@@ -13,16 +13,21 @@ class ClientService
 {
     use UploadHelper;
 
-    function findById($id){
+    function findById($id)
+    {
         return Client::find($id);
     }
     function findBy($key, $value)
     {
         return Client::where($key, $value)->get();
     }
+    function findByTwo($key1, $value1, $key2, $value2)
+    {
+        return Client::where($key1, $value1)->where($key2, $value2)->first();
+    }
     public function create($data)
     {
-        if(request()->hasFile('image')){
+        if (request()->hasFile('image')) {
             $data['image'] = $this->upload(request()->file('image'), 'client');
         }
         $client = Client::create($data);
@@ -32,7 +37,7 @@ class ClientService
 
     public function verifyOtp($data)
     {
-        $client = $this->findBy('phone', $data['phone'])[0];
+        $client = $this->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
         if ($client && $client->verify_code == $data['otp']) {
             return $this->update($client->id, ['is_active' => 1]);
         }
@@ -73,12 +78,12 @@ class ClientService
     public function clientProperties($data, $relations)
     {
         $properties = Client::query()
-        ->whereHas('properties', function($query) {
-            $query->active()->available();
-        })
-        ->with($relations)
-        ->orderByDesc('id');
-        return getCaseCollection($properties,$data);
+            ->whereHas('properties', function ($query) {
+                $query->active()->available();
+            })
+            ->with($relations)
+            ->orderByDesc('id');
+        return getCaseCollection($properties, $data);
     }
     function findToken($id)
     {

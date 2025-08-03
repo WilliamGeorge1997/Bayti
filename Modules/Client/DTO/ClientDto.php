@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientDto
 {
+    public $country_code;
     public $first_name;
     public $last_name;
     public $email;
@@ -14,6 +15,7 @@ class ClientDto
     public $password;
 
     public function __construct($request) {
+        if($request->get('country_code')) $this->country_code = $request->get('country_code');
         if($request->get('first_name')) $this->first_name = $request->get('first_name');
         if($request->get('last_name')) $this->last_name = $request->get('last_name');
         if($request->get('email')) $this->email = $request->get('email');
@@ -24,6 +26,7 @@ class ClientDto
     public function dataFromRequest()
     {
         $data =  json_decode(json_encode($this), true);
+        if($this->country_code == null) unset($data['country_code']);
         if($this->first_name == null) unset($data['first_name']);
         if($this->last_name == null) unset($data['last_name']);
         if($this->email == null) unset($data['email']);

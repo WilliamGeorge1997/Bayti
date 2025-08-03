@@ -25,7 +25,7 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $relations = ['client', 'subCategory.category', 'images', 'country', 'city', 'zone'];
+        $relations = ['client', 'subCategory.category', 'images', 'country', 'city'];
         $properties = $this->propertyService->active($data, $relations);
         return returnMessage(true, 'تم استرجاع العقارات بنجاح', PropertyResource::collection($properties)->response()->getData(true));
     }

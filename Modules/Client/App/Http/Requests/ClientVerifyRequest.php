@@ -16,6 +16,7 @@ class ClientVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'country_code' => ['required'],
             'phone' => ['required', 'exists:clients,phone'],
             'otp' => ['required'],
         ];

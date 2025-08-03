@@ -18,6 +18,7 @@ class ClientForgetPasswordRequest extends FormRequest
     {
         return [
             'phone' => 'required|exists:clients,phone',
+            'country_code' => 'required',
         ];
     }
 

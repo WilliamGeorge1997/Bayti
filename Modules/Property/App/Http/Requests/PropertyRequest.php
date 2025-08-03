@@ -43,7 +43,7 @@ class PropertyRequest extends FormRequest
             'rental_period' => 'sometimes|string|in:شهري,يومي,سنوي,الكل',
             'finishing_status' => 'sometimes|string',
             'is_furnished' => 'sometimes|boolean',
-            'is_installment' => 'sometimes|boolean',
+            'is_installment' => 'sometimes|nullable|boolean',
             'images' => 'sometimes|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:1024',
         ];
@@ -92,16 +92,16 @@ class PropertyRequest extends FormRequest
 
     public function authorize(): bool
     {
-        if (auth('client')->user()->properties()->count() >= 1) {
-            throw new HttpResponseException(
-                returnMessage(
-                    false,
-                    'لا يمكنك انشاء اكثر من اعلان واحد للعقارات',
-                    null,
-                    'forbidden'
-                )
-            );
-        }
+        // if (auth('client')->user()->properties()->count() >= 1) {
+        //     throw new HttpResponseException(
+        //         returnMessage(
+        //             false,
+        //             'لا يمكنك انشاء اكثر من اعلان واحد للعقارات',
+        //             null,
+        //             'forbidden'
+        //         )
+        //     );
+        // }
         return true;
     }
 

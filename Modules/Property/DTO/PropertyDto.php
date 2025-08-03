@@ -164,7 +164,7 @@ class PropertyDto
         if ($this->is_furnished == null)
             unset($data['is_furnished']);
         if ($this->is_installment == null)
-            unset($data['is_installment']);
+            $data['is_installment'] = null;
         if ($this->finishing_status == null)
             unset($data['finishing_status']);
         if ($this->rental_period == null)

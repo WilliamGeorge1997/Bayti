@@ -19,6 +19,7 @@ class ClientLoginRequest extends FormRequest
             'phone' => ['required', 'exists:clients,phone'],
             'password' => ['required'],
             'fcm_token' => ['sometimes','nullable', 'string'],
+            'country_code' => ['required'],
         ];
     }
 

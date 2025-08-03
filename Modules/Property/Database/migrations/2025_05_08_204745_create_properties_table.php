@@ -52,7 +52,7 @@ return new class extends Migration {
             $table->string('finishing_status')->nullable()->comment('الاكساء');
             $table->enum('rental_period', ['شهري', 'يومي', 'سنوي', 'الكل'])->nullable()->comment('نوع الايجار');
             $table->boolean('is_furnished')->default(0)->comment('بعفش او بدون عفش');
-            $table->boolean('is_installment')->default(0)->comment('بالتقسيط');
+            $table->boolean('is_installment')->nullable()->default(0)->comment('بالتقسيط');
             $table->boolean('is_active')->default(0);
             $table->boolean('is_available')->default(1);
             $table->timestamps();

@@ -55,7 +55,7 @@ class ClientAuthController extends Controller
             $data = (new ClientDto($request))->dataFromRequest();
             $user = $this->clientService->create($data);
             $whatsappService = new WhatsAppService();
-            $whatsappService->sendMessage($data['phone'], 'Your OTP verification code is: ' . $data['verify_code']);
+            $whatsappService->sendMessage($data['country_code'] . $data['phone'], 'Your OTP verification code is: ' . $data['verify_code']);
             DB::commit();
             return returnMessage(true, 'تم التسجيل بنجاح', null);
         } catch (\Exception $e) {
@@ -86,12 +86,13 @@ class ClientAuthController extends Controller
     public function resendOtp(ClientResendOtpRequest $request, ClientService $clientService)
     {
         $data = $request->all();
-        $client = $clientService->findBy('phone', $request['phone'])[0];
+        $client = $clientService->findByTwo('phone', $request['phone'], 'country_code', $request['country_code']);
+        if(!$client) return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
         $verify_code = rand(1000, 9999);
         // $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
         $whatsappService = new WhatsAppService();
-        $whatsappService->sendMessage($client->phone, 'Your OTP verification code is: ' . $verify_code);
+        $whatsappService->sendMessage( $client->country_code . $client->phone, 'Your OTP verification code is: ' . $verify_code);
         // $smsService = new SMSService();
         // $smsService->sendSMS($client->phone, $verify_code);
         return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
@@ -99,12 +100,13 @@ class ClientAuthController extends Controller
     public function forgetPassword(ClientForgetPasswordRequest $request, ClientService $clientService)
     {
         $data = $request->all();
-        $client = $clientService->findBy('phone', $data['phone'])[0];
+        $client = $clientService->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
+        if(!$client) return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
         $verify_code = rand(1000, 9999);
         // $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
         $whatsappService = new WhatsAppService();
-        $whatsappService->sendMessage($client->phone, 'Your OTP verification code is: ' . $verify_code);
+        $whatsappService->sendMessage( $client->country_code . $client->phone, 'Your OTP verification code is: ' . $verify_code);
         // $smsService = new SMSService();
         // $smsService->sendSMS($client->phone, $verify_code);
         return returnMessage(true, 'تم ارسال الرمز بنجاح', null);
@@ -113,7 +115,8 @@ class ClientAuthController extends Controller
     public function verifyForgetPassword(ClientVerifyRequest $request, ClientService $clientService)
     {
         $data = $request->all();
-        $client = $clientService->findBy('phone', $data['phone'])[0];
+        $client = $clientService->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
+        if(!$client) return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
         if ($client && $client['verify_code'] == $data['otp']) {
             return returnMessage(true, 'الرمز صحيح');
         }
@@ -123,7 +126,8 @@ class ClientAuthController extends Controller
     public function newPassword(ClientLoginRequest $request, ClientService $clientService)
     {
         $data = $request->all();
-        $client = $clientService->findBy('phone', $data['phone'])[0];
+        $client = $clientService->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
+        if(!$client) return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
         $clientService->update($client->id, ['password' => bcrypt($data['password'])]);
         return returnMessage(true, 'تم تعديل كلمة المرور بنجاح');
     }
