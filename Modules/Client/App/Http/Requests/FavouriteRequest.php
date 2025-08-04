@@ -5,42 +5,40 @@ namespace Modules\Client\App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-class ClientLoginRequest extends FormRequest
+class FavouriteRequest extends FormRequest
 {
+
+    protected function prepareForValidation()
+        {
+            $this->merge([
+                'client_id' => auth('client')->id(),
+            ]);
+        }
+
+
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'phone' => ['required', 'exists:clients,phone'],
-            'password' => ['required'],
-            'country_code' => ['required'],
-        ];
-    }
-
-    /**
-     * Get custom attributes for validator errors.
-     */
-    public function attributes(): array
-    {
-        return [
-            'phone' => 'Phone Number',
-            'password' => 'Password',
-            'fcm_token' => 'FCM Token',
+            'property_id' => 'required|exists:properties,id'
         ];
     }
 
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
+
+ 
 
     /**
      * Handle a failed validation attempt.

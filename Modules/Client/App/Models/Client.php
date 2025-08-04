@@ -17,7 +17,7 @@ class Client extends Authenticatable implements JWTSubject
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'country_code', 'password', 'image','fcm_token', 'verify_code', 'is_active'];
+    protected $fillable = ['name', 'email', 'phone', 'country_code', 'password', 'image','fcm_token', 'verify_code', 'is_active'];
     protected $hidden = ['password'];
 
     //Log Activity

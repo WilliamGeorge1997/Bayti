@@ -26,9 +26,9 @@ return new class extends Migration {
             $table->foreignIdFor(City::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->string('zone')->nullable();
             $table->string('address')->nullable();
-            $table->decimal('price', 12, 2)->nullable();
+            $table->unsignedInteger('price')->nullable();
             $table->string('type')->nullable()->comment('نوع');
-            $table->decimal('area', 10, 2)->nullable()->comment('المساحة');
+            $table->unsignedInteger('area')->nullable()->comment('المساحة');
             $table->unsignedTinyInteger('floor')->nullable()->comment('الطابق');
             $table->string('directions')->nullable()->comment('الاتجاهات');
             $table->unsignedTinyInteger('age')->nullable()->comment('عمر العقار');
@@ -37,10 +37,10 @@ return new class extends Migration {
             $table->unsignedTinyInteger('living_rooms')->nullable()->comment('عدد الصالات');
             $table->unsignedTinyInteger('bathrooms')->nullable()->comment('عدد الحمامات');
             $table->unsignedTinyInteger('facades')->nullable()->comment('عدد الواجهات');
-            $table->decimal('scale', 10, 2)->nullable()->comment('الميزان');
+            $table->unsignedInteger('scale')->nullable()->comment('الميزان');
             $table->unsignedTinyInteger('pools')->nullable()->comment('عدد المسبح');
             $table->unsignedTinyInteger('salons')->nullable()->comment('صالون');
-            $table->decimal('total_area', 10, 2)->nullable()->comment('مساحة الاجماليه');
+            $table->unsignedInteger('total_area')->nullable()->comment('مساحة الاجماليه');
             $table->unsignedTinyInteger('fruit_trees')->nullable()->comment('أشجار مثمرة');
             $table->unsignedTinyInteger('water_wells')->nullable()->comment('بير مياه');
             $table->string('video')->nullable();

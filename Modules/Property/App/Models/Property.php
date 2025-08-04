@@ -61,7 +61,7 @@ class Property extends Model
         'finishing_status',
         'rental_period',
     ];
-
+    protected $appends = ['in_favourite'];
     //Log Activity
     public function getActivitylogOptions(): LogOptions
     {
@@ -89,6 +89,19 @@ class Property extends Model
     {
         return $query->where('is_available', 1);
     }
+
+
+    public function getInFavouriteAttribute()
+    {
+        if (auth('client')->check()) {
+            $exists = $this->favourites()->where('client_id', auth('client')->id())->exists();
+            if ($exists) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
 
     //Relations
     public function client()

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Client\App\Http\Controllers\Api\ClientController;
+use Modules\Client\App\Http\Controllers\Api\FavouriteController;
 use Modules\Client\App\Http\Controllers\Api\ClientAuthController;
 use Modules\Client\App\Http\Controllers\Api\NotificationController;
 /*
@@ -19,11 +20,11 @@ use Modules\Client\App\Http\Controllers\Api\NotificationController;
 Route::group([
     'prefix' => 'client'
 ], function ($router) {
-    Route::post('authenticate', [ClientAuthController::class, 'loginOrRegister']);
+    // Route::post('authenticate', [ClientAuthController::class, 'loginOrRegister']);
 
     Route::group(['prefix' => 'auth'], function ($router) {
-        // Route::post('login', [ClientAuthController::class, 'login']);
-        // Route::post('register', [ClientAuthController::class, 'register']);
+        Route::post('login', [ClientAuthController::class, 'login']);
+        Route::post('register', [ClientAuthController::class, 'register']);
         Route::post('logout', [ClientAuthController::class, 'logout']);
         Route::post('verify', [ClientAuthController::class, 'verifyOtp']);
         Route::post('refresh', [ClientAuthController::class, 'refresh']);
@@ -49,4 +50,12 @@ Route::group([
     Route::post('read', [NotificationController::class, 'readNotification']);
     Route::post('allow_notification', [NotificationController::class, 'allow_notification']);
     Route::get('unReadNotificationsCount', [NotificationController::class, 'unReadNotificationsCount']);
+});
+
+Route::group([
+    'prefix' => 'favourites',
+], function ($router) {
+
+    Route::post('toggle', [FavouriteController::class, 'toggleFavourite']);
+    Route::get('/', [FavouriteController::class, 'favourites']);
 });

@@ -186,4 +186,15 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+
+    /*
+|--------------------------------------------------------------------------
+| Mobile App Configuration
+|--------------------------------------------------------------------------
+|
+| Configuration for mobile app deep linking
+|
+*/
+
+    'mobile_app_scheme' => env('MOBILE_APP_SCHEME', 'bayti'),
 ];

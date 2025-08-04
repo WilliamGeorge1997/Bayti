@@ -16,11 +16,11 @@ class ClientRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'max:255'],
-            'last_name' => ['required', 'max:255'],
-            'email' => ['nullable', 'email', 'unique:clients,email'],
+            'name' => ['required', 'max:255'],
+            'email' => ['sometimes', 'nullable', 'email', 'unique:clients,email'],
             'password' => ['required', 'min:6', 'confirmed'],
-            'phone' => ['required' ,'unique:clients,phone'],
+            'country_code' => ['required', 'string'],
+            'phone' => ['required', 'unique:clients,phone'],
             'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:1024'],
         ];
     }
@@ -31,8 +31,7 @@ class ClientRegisterRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'name' => 'Name',
             'email' => 'Email Address',
             'password' => 'Password',
             'phone' => 'Phone',

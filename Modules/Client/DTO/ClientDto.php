@@ -8,16 +8,14 @@ use Illuminate\Support\Facades\Hash;
 class ClientDto
 {
     public $country_code;
-    public $first_name;
-    public $last_name;
+    public $name;
     public $email;
     public $phone;
     public $password;
 
     public function __construct($request) {
         if($request->get('country_code')) $this->country_code = $request->get('country_code');
-        if($request->get('first_name')) $this->first_name = $request->get('first_name');
-        if($request->get('last_name')) $this->last_name = $request->get('last_name');
+        if($request->get('name')) $this->name = $request->get('name');
         if($request->get('email')) $this->email = $request->get('email');
         if($request->get('phone')) $this->phone = $request->get('phone');
         if($request->get('password')) $this->password = Hash::make($request->get('password'));
@@ -27,8 +25,7 @@ class ClientDto
     {
         $data =  json_decode(json_encode($this), true);
         if($this->country_code == null) unset($data['country_code']);
-        if($this->first_name == null) unset($data['first_name']);
-        if($this->last_name == null) unset($data['last_name']);
+        if($this->name == null) unset($data['name']);
         if($this->email == null) unset($data['email']);
         if($this->phone == null) unset($data['phone']);
         if($this->password == null) unset($data['password']);

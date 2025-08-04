@@ -2,8 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\Property\App\Http\Controllers\ShareController;
 use Modules\Property\App\Http\Controllers\Api\PropertyController;
 use Modules\Property\App\Http\Controllers\Api\PropertyAdminController;
+use Modules\Property\App\Http\Controllers\Api\PropertyShareController;
 
 /*
     |--------------------------------------------------------------------------
@@ -22,3 +24,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::apiResource('properties', PropertyController::class)->except(['update', 'delete']);
 Route::post('properties/{property}/toggle-available', [PropertyController::class, 'toggleAvailable']);
+
+Route::get('properties/{property}/share', [PropertyShareController::class, 'generateShareLink']);
+Route::get('/p/{token}', [ShareController::class, 'handleSharedLink'])->name('property.shared');

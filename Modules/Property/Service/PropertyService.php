@@ -45,11 +45,17 @@ class PropertyService
             ->when($data['type'] ?? null, function ($query) use ($data) {
                 return $query->where('type', $data['type']);
             })
-            ->when($data['price'] ?? null, function ($query) use ($data) {
-                return $query->where('price', $data['price']);
+            ->when($data['min_price'] ?? null, function ($query) use ($data) {
+                return $query->where('price', '>=', $data['min_price']);
             })
-            ->when($data['area'] ?? null, function ($query) use ($data) {
-                return $query->where('area', $data['area']);
+            ->when($data['max_price'] ?? null, function ($query) use ($data) {
+                return $query->where('price', '<=', $data['max_price']);
+            })
+            ->when($data['min_area'] ?? null, function ($query) use ($data) {
+                return $query->where('area', '>=', $data['min_area']);
+            })
+            ->when($data['max_area'] ?? null, function ($query) use ($data) {
+                return $query->where('area', '<=', $data['max_area']);
             })
             ->when($data['floor'] ?? null, function ($query) use ($data) {
                 return $query->where('floor', $data['floor']);
@@ -84,8 +90,11 @@ class PropertyService
             ->when($data['salons'] ?? null, function ($query) use ($data) {
                 return $query->where('salons', $data['salons']);
             })
-            ->when($data['total_area'] ?? null, function ($query) use ($data) {
-                return $query->where('total_area', $data['total_area']);
+            ->when($data['min_total_area'] ?? null, function ($query) use ($data) {
+                return $query->where('total_area', '>=', $data['min_total_area']);
+            })
+            ->when($data['max_total_area'] ?? null, function ($query) use ($data) {
+                return $query->where('total_area', '<=', $data['max_total_area']);
             })
             ->when($data['fruit_trees'] ?? null, function ($query) use ($data) {
                 return $query->where('fruit_trees', $data['fruit_trees']);
@@ -170,8 +179,20 @@ class PropertyService
             ->when($data['price'] ?? null, function ($query) use ($data) {
                 return $query->where('price', $data['price']);
             })
+            ->when($data['min_price'] ?? null, function ($query) use ($data) {
+                return $query->where('price', '>=', $data['min_price']);
+            })
+            ->when($data['max_price'] ?? null, function ($query) use ($data) {
+                return $query->where('price', '<=', $data['max_price']);
+            })
             ->when($data['area'] ?? null, function ($query) use ($data) {
                 return $query->where('area', $data['area']);
+            })
+            ->when($data['min_area'] ?? null, function ($query) use ($data) {
+                return $query->where('area', '>=', $data['min_area']);
+            })
+            ->when($data['max_area'] ?? null, function ($query) use ($data) {
+                return $query->where('area', '<=', $data['max_area']);
             })
             ->when($data['floor'] ?? null, function ($query) use ($data) {
                 return $query->where('floor', $data['floor']);
@@ -208,6 +229,12 @@ class PropertyService
             })
             ->when($data['total_area'] ?? null, function ($query) use ($data) {
                 return $query->where('total_area', $data['total_area']);
+            })
+            ->when($data['min_total_area'] ?? null, function ($query) use ($data) {
+                return $query->where('total_area', '>=', $data['min_total_area']);
+            })
+            ->when($data['max_total_area'] ?? null, function ($query) use ($data) {
+                return $query->where('total_area', '<=', $data['max_total_area']);
             })
             ->when($data['fruit_trees'] ?? null, function ($query) use ($data) {
                 return $query->where('fruit_trees', $data['fruit_trees']);

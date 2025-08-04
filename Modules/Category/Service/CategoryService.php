@@ -13,13 +13,13 @@ class CategoryService
 
     function findAll($data = [], $relations = [])
     {
-        $categories = Category::query()->with($relations)->latest();
+        $categories = Category::query()->with($relations)->orderByDesc('id');
         return getCaseCollection($categories, $data);
     }
 
     function findSubCategories($category, $data = [], $relations = [])
     {
-        $subCategories = Category::query()->where('id', $category->id)->with($relations)->latest();
+        $subCategories = Category::query()->where('id', $category->id)->with($relations)->orderByDesc('id');
         return getCaseCollection($subCategories, $data);
     }
 
@@ -36,7 +36,7 @@ class CategoryService
 
     function active($data = [], $relations = [])
     {
-        $categories = Category::query()->active()->with($relations)->latest();
+        $categories = Category::query()->active()->with($relations)->orderByDesc('id');
         return getCaseCollection($categories, $data);
     }
     public function create($data)
