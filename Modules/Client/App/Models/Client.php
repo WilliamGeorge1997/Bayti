@@ -58,6 +58,11 @@ class Client extends Authenticatable implements JWTSubject
     {
         return $this->morphMany(Notification::class, 'notifiable')->orWhere('notifiable_id', null);
     }
+
+    public function routeNotificationForExpoPushNotifications()
+    {
+        return $this->fcm_token;
+    }
     //JWT
 
     /**

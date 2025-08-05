@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "alymosul/laravel-exponent-push-notifications": "^4.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image-laravel": "^1.5",
         "kreait/firebase-php": "^7.10",

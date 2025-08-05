@@ -8,6 +8,7 @@ use Modules\Common\Helpers\FCMService;
 use Modules\Common\Helpers\UploadHelper;
 use Modules\Client\Service\ClientService;
 use Modules\Notification\App\Models\Notification;
+use Modules\Notification\App\Notifications\ExpoNotification;
 
 class NotificationService
 {
@@ -61,9 +62,14 @@ class NotificationService
             'user_id' => $user_id,
         ];
         $this->save($data, $model);
-        $fcm = new FCMService;
-        $user_token = (new ClientService())->findToken($user_id);
-        if ($user_token ?? null)
-            $fcm->sendNotification($data, [$user_token]);
+
+        $client = (new ClientService())->findById($user_id);
+        if ($client->fcm_token) {
+            $client->notify(new ExpoNotification($title, $description, $data));
+        }
+        // $fcm = new FCMService;
+        // $user_token = (new ClientService())->findToken($user_id);
+        // if ($user_token ?? null)
+        //     $fcm->sendNotification($data, [$user_token]);
     }
 }
