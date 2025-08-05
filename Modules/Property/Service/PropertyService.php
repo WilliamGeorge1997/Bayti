@@ -26,8 +26,7 @@ class PropertyService
             })
             ->when($data['name'] ?? null, function ($query) use ($data) {
                 return $query->whereHas('client', function ($query) use ($data) {
-                    $query->where('first_name', 'like', '%' . $data['name'] . '%')
-                        ->orWhere('last_name', 'like', '%' . $data['name'] . '%');
+                    $query->where('name', 'like', '%' . $data['name'] . '%');
                 });
             })
             ->when($data['sub_category_id'] ?? null, function ($query) use ($data) {
@@ -157,8 +156,7 @@ class PropertyService
             })
             ->when($data['name'] ?? null, function ($query) use ($data) {
                 return $query->whereHas('client', function ($query) use ($data) {
-                    $query->where('first_name', 'like', '%' . $data['name'] . '%')
-                        ->orWhere('last_name', 'like', '%' . $data['name'] . '%');
+                    $query->where('name', 'like', '%' . $data['name'] . '%');
                 });
             })
             ->when($data['sub_category_id'] ?? null, function ($query) use ($data) {

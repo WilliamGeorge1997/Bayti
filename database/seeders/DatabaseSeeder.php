@@ -27,8 +27,7 @@ class DatabaseSeeder extends Seeder
         ]);
         // $clients = [
         //     [
-        //         'first_name' => 'أحمد',
-        //         'last_name' => 'علي',
+        //         'name' => 'أحمد',
         //         'email' => 'ahmed@example.com',
         //         'phone' => '01234567891',
         //         'image' => 'https://placehold.co/600x400',
@@ -38,8 +37,7 @@ class DatabaseSeeder extends Seeder
         //         'updated_at' => now(),
         //     ],
         //     [
-        //         'first_name' => 'محمد',
-        //         'last_name' => 'علي',
+        //         'name' => 'محمد',
         //         'email' => 'mohamed@example.com',
         //         'phone' => '01234567892',
         //         'image' => 'https://placehold.co/600x400',

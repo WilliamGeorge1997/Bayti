@@ -5,6 +5,8 @@ namespace Modules\Client\App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Modules\Client\App\Models\Client;
+use Illuminate\Support\Facades\Hash;
 
 class ClientLoginRequest extends FormRequest
 {
@@ -16,7 +18,7 @@ class ClientLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required', 'exists:clients,phone'],
+            'phone' => ['required'],
             'password' => ['required'],
             'country_code' => ['required'],
         ];
@@ -40,6 +42,36 @@ class ClientLoginRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $phone = $this->input('phone');
+            $country_code = $this->input('country_code');
+            $password = $this->input('password');
+            $client = Client::where('phone', $phone)
+                ->where('country_code', $country_code)
+                ->first();
+            if (!$client) {
+                $phoneExists = Client::where('phone', $phone)->exists();
+                if ($phoneExists) {
+                    $validator->errors()->add('country_code', 'رمز البلد غير صحيح.');
+                } else {
+                    $validator->errors()->add('phone', 'رقم الهاتف هذا غير مسجل.');
+                }
+            } else {
+                if (!Hash::check($password, $client->password)) {
+                    $validator->errors()->add('password', 'كلمة المرور غير صحيحة.');
+                }
+            }
+        });
     }
 
     /**

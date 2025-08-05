@@ -17,8 +17,7 @@ class ClientUpdateProfileRequest extends FormRequest
     {
         $clientId = auth('client')->id();
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:15', 'unique:clients,phone,' . $clientId],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:1024'],
             'email' => ['required', 'email', 'unique:clients,email,' . $clientId],
@@ -31,8 +30,7 @@ class ClientUpdateProfileRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'name' => 'Name',
             'phone' => 'Phone',
             'image' => 'Image',
             'email' => 'Email',

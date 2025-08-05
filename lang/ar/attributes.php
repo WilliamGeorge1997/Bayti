@@ -20,8 +20,6 @@ return [
     'country_ids' => 'الدول',
     'country_ids.*' => 'الدولة',
     'page' => 'الصفحة',
-    'first_name' => 'الاسم الاول',
-    'last_name' => 'الاسم الاخير',
     'email' => 'البريد الالكتروني',
     'phone' => 'الهاتف',
     'message' => 'الرسالة',

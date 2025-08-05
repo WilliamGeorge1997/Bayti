@@ -8,6 +8,7 @@ use Modules\Country\App\Models\Zone;
 use Modules\Client\App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Country\App\Models\Country;
+use Modules\Client\App\Models\Favourite;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Modules\Category\App\Models\SubCategory;
 use Modules\Property\App\Models\PropertyImage;
@@ -118,7 +119,10 @@ class Property extends Model
     {
         return $this->hasMany(PropertyImage::class);
     }
-
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
     public function country()
     {
         return $this->belongsTo(Country::class);

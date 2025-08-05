@@ -52,13 +52,17 @@ class ClientAuthController extends Controller
         try {
             $credentials = $request->validated();
             if (!$token = auth('client')->attempt($credentials)) {
-                return returnValidationMessage(false, 'غير مصرح لك بالدخول', ['password' => 'كلمة المرور غير صحيحة'], 'unauthorized');
+                return returnValidationMessage(false, 'غير مصرح لك بالدخول', null, 'unauthorized');
             }
-            if (auth('client')->user()['is_active'] == 0) {
-                return returnMessage(false, 'العميل غير مفعل', null, 'temporary_redirect');
+            $client = auth('client')->user();
+            if ($client['is_active'] == 0) {
+                $client->update(['verify_code' => rand(1000, 9999)]);
+                $whatsappService = new WhatsAppService();
+                $whatsappService->sendMessage($client['country_code'] . $client['phone'], 'Your OTP verification code is: ' . $client['verify_code']);
+                return returnMessage(false, 'العميل غير مفعل تم ارسال رمز التحقق علي الواتساب', null, 'temporary_redirect');
             }
             if ($request['fcm_token'] ?? null) {
-                auth('client')->user()->update(['fcm_token' => $request->fcm_token]);
+                $client->update(['fcm_token' => $request->fcm_token]);
             }
             DB::commit();
             return $this->respondWithToken($token);
