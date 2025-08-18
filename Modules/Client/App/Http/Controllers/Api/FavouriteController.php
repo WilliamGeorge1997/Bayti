@@ -39,7 +39,7 @@ class FavouriteController extends Controller
     {
         $data = $request->all();
         $data['property_ids'] = $this->favouriteService->findBy('client_id',auth('client')->id())->pluck('property_id');
-        $relations = ['sub_category.category', 'images', 'country', 'city', 'zone', 'compound.category'];
+        $relations = ['subCategory.category', 'images', 'country', 'city'];
         $properties = (new PropertyService())->properties($data, $relations);
         return returnMessage(true,'Favorites', $properties);
 

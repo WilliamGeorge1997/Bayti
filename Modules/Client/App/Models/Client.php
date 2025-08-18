@@ -9,10 +9,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Modules\Notification\App\Models\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Client extends Authenticatable implements JWTSubject
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity , Notifiable;
 
     /**
      * The attributes that are mass assignable.

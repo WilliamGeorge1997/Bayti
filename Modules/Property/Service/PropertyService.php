@@ -310,4 +310,10 @@ class PropertyService
         $property->update(array_merge($data, ['is_available' => !$property->is_available]));
         return $property->fresh();
     }
+
+     function properties($data, $relations = [])
+    {
+        $properties = Property::query()->whereIn('id', $data['property_ids'])->with($relations)->orderBy('id', 'desc')->get();
+        return $properties;
+    }
 }

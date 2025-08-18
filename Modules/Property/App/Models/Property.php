@@ -133,8 +133,4 @@ class Property extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function zone()
-    {
-        return $this->belongsTo(Zone::class);
-    }
 }

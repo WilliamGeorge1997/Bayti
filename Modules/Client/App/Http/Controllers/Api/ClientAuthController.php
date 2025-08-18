@@ -13,6 +13,7 @@ use Modules\Client\App\Http\Requests\ClientVerifyRequest;
 use Modules\Client\App\Http\Requests\ClientRegisterRequest;
 use Modules\Client\App\Http\Requests\ClientResendOtpRequest;
 use Modules\Client\App\Http\Requests\ClientForgetPasswordRequest;
+use NotificationChannels\ExpoPushNotifications\Repositories\ExpoDatabaseDriver;
 
 
 class ClientAuthController extends Controller
@@ -59,10 +60,34 @@ class ClientAuthController extends Controller
                 $client->update(['verify_code' => rand(1000, 9999)]);
                 $whatsappService = new WhatsAppService();
                 $whatsappService->sendMessage($client['country_code'] . $client['phone'], 'Your OTP verification code is: ' . $client['verify_code']);
+                DB::commit();
                 return returnMessage(false, 'العميل غير مفعل تم ارسال رمز التحقق علي الواتساب', null, 'temporary_redirect');
             }
             if ($request['fcm_token'] ?? null) {
                 $client->update(['fcm_token' => $request->fcm_token]);
+
+                // Register the token with Expo service
+                try {
+                    $interestDetails = [
+                        'key' => (string) $client->id,
+                        'value' => $request->fcm_token
+                    ];
+
+                    // Use the fully qualified class name with the "use" statement
+                    $expo = new ExpoDatabaseDriver();
+                    $expo->store($interestDetails['key'], $interestDetails['value']);
+
+                    \Illuminate\Support\Facades\Log::info('Expo token registered for client', [
+                        'client_id' => $client->id,
+                        'token' => $request->fcm_token
+                    ]);
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Failed to register Expo token', [
+                        'error' => $e->getMessage(),
+                        'stack' => $e->getTraceAsString(),
+                        'client_id' => $client->id
+                    ]);
+                }
             }
             DB::commit();
             return $this->respondWithToken($token);

@@ -14,12 +14,13 @@ class ExpoNotification extends Notification
     protected $title;
     protected $body;
     protected $data;
-    
+
     public function __construct($title, $body, $data = [])
     {
         $this->title = $title;
         $this->body = $body;
         $this->data = $data;
+        $this->onQueue('default')->onConnection('database');
     }
 
     public function via($notifiable)
@@ -29,14 +30,27 @@ class ExpoNotification extends Notification
 
     public function toExpoPush($notifiable)
     {
-        $message = ExpoMessage::create()
-            ->title($this->title)
-            ->body($this->body)
-            ->enableSound();
+        $token = $notifiable->routeNotificationForExpoPushNotifications();
+
+        if (empty($token)) {
+            \Log::error('No token found');
+            return null;
+        }
+
+        $message = ExpoMessage::create();
+        $message->title($this->title);
+        $message->body($this->body);
+        $message->enableSound();
 
         if (!empty($this->data)) {
             $message->setJsonData($this->data);
         }
+        \Log::info('ExpoMessage debug:', [
+            'message_class' => get_class($message),
+            'message_content' => $message->toArray() ?? 'null',
+            'title' => $this->title,
+            'body' => $this->body
+        ]);
 
         return $message;
     }
