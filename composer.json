@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "alymosul/laravel-exponent-push-notifications": "^4.0",
+        "ctwillie/expo-server-sdk-php": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image-laravel": "^1.5",
         "kreait/firebase-php": "^7.10",

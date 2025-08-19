@@ -13,12 +13,12 @@ use Illuminate\Notifications\Notifiable;
 
 class Client extends Authenticatable implements JWTSubject
 {
-    use HasFactory, LogsActivity , Notifiable;
+    use HasFactory, LogsActivity, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['name', 'email', 'phone', 'country_code', 'password', 'image','fcm_token', 'verify_code', 'is_active'];
+    protected $fillable = ['name', 'email', 'phone', 'country_code', 'password', 'image', 'fcm_token', 'verify_code', 'is_active'];
     protected $hidden = ['password'];
 
     //Log Activity
@@ -63,6 +63,13 @@ class Client extends Authenticatable implements JWTSubject
     public function routeNotificationForExpoPushNotifications()
     {
         return $this->fcm_token;
+    }
+    public function routeNotificationFor($driver)
+    {
+        if ($driver === 'ExpoPushNotifications') {
+            return (string) $this->id;
+        }
+        return null;
     }
     //JWT
 

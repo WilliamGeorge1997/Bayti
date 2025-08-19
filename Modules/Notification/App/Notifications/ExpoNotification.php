@@ -46,6 +46,7 @@ class ExpoNotification extends Notification
             $message->setJsonData($this->data);
         }
         \Log::info('ExpoMessage debug:', [
+            'token' => $token,
             'message_class' => get_class($message),
             'message_content' => $message->toArray() ?? 'null',
             'title' => $this->title,
