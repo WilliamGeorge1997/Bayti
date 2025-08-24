@@ -57,7 +57,8 @@ class ClientAuthController extends Controller
             }
             $client = auth('client')->user();
             if ($client['is_active'] == 0) {
-                $client->update(['verify_code' => rand(1000, 9999)]);
+                // $client->update(['verify_code' => rand(1000, 9999)]);
+                $client->update(['verify_code' => 9999]);
                 $whatsappService = new WhatsAppService();
                 $whatsappService->sendMessage($client['country_code'] . $client['phone'], 'Your OTP verification code is: ' . $client['verify_code']);
                 DB::commit();
@@ -153,8 +154,8 @@ class ClientAuthController extends Controller
         $client = $clientService->findByTwo('phone', $request['phone'], 'country_code', $request['country_code']);
         if (!$client)
             return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
-        $verify_code = rand(1000, 9999);
-        // $verify_code = 9999;
+        // $verify_code = rand(1000, 9999);
+        $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
         $whatsappService = new WhatsAppService();
         $whatsappService->sendMessage($client->country_code . $client->phone, 'Your OTP verification code is: ' . $verify_code);
@@ -168,8 +169,8 @@ class ClientAuthController extends Controller
         $client = $clientService->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
         if (!$client)
             return returnMessage(false, 'العميل غير موجود', null, 'unprocessable_entity');
-        $verify_code = rand(1000, 9999);
-        // $verify_code = 9999;
+        // $verify_code = rand(1000, 9999);
+        $verify_code = 9999;
         $clientService->update($client->id, ['verify_code' => $verify_code]);
         $whatsappService = new WhatsAppService();
         $whatsappService->sendMessage($client->country_code . $client->phone, 'Your OTP verification code is: ' . $verify_code);
