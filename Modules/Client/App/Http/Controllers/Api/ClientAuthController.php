@@ -12,6 +12,7 @@ use Modules\Client\App\Http\Requests\ClientLoginRequest;
 use Modules\Client\App\Http\Requests\ClientVerifyRequest;
 use Modules\Client\App\Http\Requests\ClientRegisterRequest;
 use Modules\Client\App\Http\Requests\ClientResendOtpRequest;
+use Modules\Client\App\Http\Requests\ClientNewPasswordRequest;
 use Modules\Client\App\Http\Requests\ClientForgetPasswordRequest;
 use NotificationChannels\ExpoPushNotifications\Repositories\ExpoDatabaseDriver;
 
@@ -191,7 +192,7 @@ class ClientAuthController extends Controller
         return returnMessage(false, 'الرمز غير صحيح', null, 'unauthorized');
     }
 
-    public function newPassword(ClientLoginRequest $request, ClientService $clientService)
+    public function newPassword(ClientNewPasswordRequest $request, ClientService $clientService)
     {
         $data = $request->all();
         $client = $clientService->findByTwo('phone', $data['phone'], 'country_code', $data['country_code']);
